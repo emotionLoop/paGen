@@ -1,0 +1,142 @@
+{
+	"name": {
+		"message": "paGen",
+		"description": "Extension name."
+	},
+	"description": {
+		"message": "Password Generator. Easy. Simple.",
+		"description": "Extension description."
+	},
+	"popupTitle": {
+		"message": "paGen's Popup",
+		"description": "Popup title."
+	},
+	"logoDescription": {
+		"message": "paGen - Password Generator by emotionLoop",
+		"description": "Logo alt/title attributes."
+	},
+	"error": {
+		"message": "Error!",
+		"description": "Label."
+	},
+	"information": {
+		"message": "Information",
+		"description": "Label."
+	},
+	"validateType": {
+		"message": "You have to choose to generate either a single or multiple passwords!",
+		"description": "Error Message."
+	},
+	"validateChars": {
+		"message": "You have to choose a password length of 1 to 128 chars!",
+		"description": "Error Message."
+	},
+	"validateHowMany": {
+		"message": "You have to choose a number of passwords to generate between 1 and 20!",
+		"description": "Error Message."
+	},
+	"validateComplexity": {
+		"message": "You have to choose at least a complexity option!",
+		"description": "Error Message."
+	},
+	"settingsSaved": {
+		"message": "Settings saved!",
+		"description": "Success Message."
+	},
+	"passwordLength": {
+		"message": "Password Length:",
+		"description": "Label."
+	},
+	"generatePassword": {
+		"message": "Generate Password",
+		"description": "Button Label."
+	},
+	"passwordHere": {
+		"message": "Your Password will show here",
+		"description": "Input Placeholder."
+	},
+	"howManyPasswords": {
+		"message": "How many Passwords?",
+		"description": "Label."
+	},
+	"generatePasswords": {
+		"message": "Generate Passwords",
+		"description": "Button Label."
+	},
+	"passwordsHere": {
+		"message": "Your Passwords will show here",
+		"description": "Textarea Placeholder."
+	},
+	"settings": {
+		"message": "Settings",
+		"description": "Button Label."
+	},
+	"goBack": {
+		"message": "Go Back",
+		"description": "Link Label."
+	},
+	"complexityOptions": {
+		"message": "Complexity Options",
+		"description": "Settings Title."
+	},
+	"lowercaseDescription": {
+		"message": "Include Lowercase characters: [a..z]",
+		"description": "Lowercase option explanation."
+	},
+	"lowercaseOption": {
+		"message": "Lowercase",
+		"description": "Label."
+	},
+	"uppercaseDescription": {
+		"message": "Include Uppercase characters: [A..Z]",
+		"description": "Uppercase option explanation."
+	},
+	"uppercaseOption": {
+		"message": "Uppercase",
+		"description": "Label."
+	},
+	"specialDescription": {
+		"message": "Include Special characters: [áÁ..àÀ..äÄ..çÇ]",
+		"description": "Special option explanation."
+	},
+	"specialOption": {
+		"message": "Special",
+		"description": "Label."
+	},
+	"punctuationDescription": {
+		"message": "Include Punctuation characters: [!.,;:?^~`´<>”·ˆ‹›#&amp;*%-()[]{}]",
+		"description": "Punctuation option explanation."
+	},
+	"punctuationOption": {
+		"message": "Punctuation",
+		"description": "Label."
+	},
+	"readableDescription": {
+		"message": "Make Password more 'Readable', reducing security",
+		"description": "Readable option explanation."
+	},
+	"readableOption": {
+		"message": "Readable",
+		"description": "Label."
+	},
+	"singleDescription": {
+		"message": "Generate a Single Password",
+		"description": "Single option explanation."
+	},
+	"singleOption": {
+		"message": "Single",
+		"description": "Label."
+	},
+	"multipleDescription": {
+		"message": "Generate Multiple Passwords",
+		"description": "Multiple option explanation."
+	},
+	"multipleOption": {
+		"message": "Multiple",
+		"description": "Label."
+	},
+	"saveSettings": {
+		"message": "Save Settings",
+		"description": "Button Label."
+	}
+}

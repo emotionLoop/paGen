@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+	<head>
+		<title class="apply-i18n">popupTitle</title>
+		<link href="popup.css" rel="stylesheet">
+	</head>
+	<body>
+		<div id="logo">
+			<a href="http://emotionloop.com" target="_blank"><img class="apply-i18n-alt apply-i18n-title" src="logo.png" alt="logoDescription" title="logoDescription"></a>
+		</div>
+		<div id="main-screen">
+			<form id="generator-form" action="#" method="get">
+				<div class="single">
+					<label>
+						<span class="apply-i18n">passwordLength</span> <input id="single-passwords-length" type="number" min="1" max="128" step="1" value="14">
+					</label>
+					<button type="button" class="generate-password apply-i18n">generatePassword</button>
+					<input type="text" id="password-input" class="apply-i18n-placeholder" placeholder="passwordHere">
+				</div>
+				<div class="multiple">
+					<label>
+						<span class="apply-i18n">passwordLength</span> <input id="multiple-passwords-length" type="number" min="1" max="128" step="1" value="14">
+					</label>
+					<label>
+						<span class="apply-i18n">howManyPasswords</span> <input id="passwords-number" type="number" min="1" max="20" step="1" value="1">
+					</label>
+					<button type="button" class="generate-password apply-i18n">generatePasswords</button>
+					<textarea id="passwords-textarea" class="apply-i18n-placeholder" placeholder="passwordsHere"></textarea>
+				</div>
+			</form>
+			<a href="#" id="settings-cog"><img class="apply-i18n-alt apply-i18n-title" src="settings-cog.png" alt="settings" title="settings"></a>
+		</div>
+		<div id="settings-screen">
+			<a href="#" class="go-back apply-i18n">goBack</a>
+			<h1 class="apply-i18n">complexityOptions</h1>
+			<form id="settings-form" action="#" method="get">
+				<label class="apply-i18n-title" title="lowercaseDescription">
+					<input type="checkbox" id="settingsLowercase" value="yes" checked="checked"> <span class="apply-i18n">lowercaseOption</span>
+				</label>
+				<label class="apply-i18n-title" title="uppercaseDescription">
+					<input type="checkbox" id="settingsUppercase" value="yes" checked="checked"> <span class="apply-i18n">uppercaseOption</span>
+				</label>
+				<label class="apply-i18n-title" title="specialDescription">
+					<input type="checkbox" id="settingsSpecial" value="yes" checked="checked"> <span class="apply-i18n">specialOption</span>
+				</label>
+				<label class="apply-i18n-title" title="punctuationDescription">
+					<input type="checkbox" id="settingsPunctuation" value="yes" checked="checked"> <span class="apply-i18n">punctuationOption</span>
+				</label>
+				<label class="apply-i18n-title" title="readableDescription">
+					<input type="checkbox" id="settingsReadable" value="yes"> <span class="apply-i18n">readableOption</span>
+				</label>
+				<label class="apply-i18n-title" title="singleDescription">
+					<input type="radio" name="type" id="settingsSingle" value="yes" checked="checked"> <span class="apply-i18n">singleOption</span>
+				</label>
+				<label class="apply-i18n-title" title="multipleDescription">
+					<input type="radio" name="type" id="settingsMultiple" value="yes"> <span class="apply-i18n">multipleOption</span>
+				</label>
+				<button type="button" class="apply-i18n" id="save-settings">saveSettings</button>
+			</form>
+			<a href="#" class="go-back apply-i18n">goBack</a>
+		</div>
+		<script src="popup.js"></script>
+	</body>
+</html>

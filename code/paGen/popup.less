@@ -1,0 +1,165 @@
+@fontFamily: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+body {
+	min-width: 300px;
+	overflow-x: hidden;
+	font: 14px @fontFamily;
+	color: #333;
+}
+
+button {
+	//-webkit-box-shadow:inset 0px 1px 0px 0px #cae3fc;
+	box-shadow: inset 0px 1px 0px 0px #cae3fc;
+	background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #79bbff), color-stop(1, #4197ee) );
+	background-color: #79bbff;
+	border-radius: 6px;
+	border: 1px solid #469df5;
+	display: block;
+	color: #ffffff;
+	font-family: @fontFamily;
+	font-size: 15px;
+	font-weight: bold;
+	padding: 6px 24px;
+	text-decoration: none;
+	text-shadow: 1px 1px 0px #287ace;
+	cursor: pointer;
+
+	&:hover {
+		background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #4197ee), color-stop(1, #79bbff) );
+		background-color: #4197ee;
+	}
+
+	&:active {
+		position: relative;
+		top: 1px;
+	}
+}
+
+#logo {
+	margin: 20px auto 0;
+	text-align: center;
+	display: block;
+
+	img {
+		width: 260px;
+	}
+}
+
+@-webkit-keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+#main-screen {
+	-webkit-animation: fadeIn 300ms;
+	-webkit-transition: height 300ms ease-in-out;
+	display: block;
+	overflow: auto;
+	position: relative;
+
+	#generator-form {
+		margin: 10px auto;
+
+		label {
+			display: block;
+			margin: 10px auto;
+			text-align: center;
+			font-size: 16px;
+		}
+
+		input, textarea {
+			display: block;
+			padding: 5px;
+			margin: 10px auto;
+			font-size: 14px;
+		}
+
+		input[type="number"] {
+			padding-right: 0;
+			display: inline-block
+		}
+
+		.single {
+			display: none;
+
+			#password-input {
+				padding: 5px 10px;
+				width: 250px;
+			}
+		}
+
+		.multiple {
+			display: none;
+
+			#passwords-textarea {
+				padding: 5px 10px;
+				min-height: 40px;
+				width: 250px;
+				resize: vertical;
+			}
+		}
+
+		button {
+			margin: 10px auto 20px;
+			text-align: center;
+		}
+	}
+
+	#settings-cog {
+		position: absolute;
+		right: 15px;
+
+		img {
+			//width: 27px;
+			width: 18px;
+		}
+	}
+}
+
+#settings-screen {
+	-webkit-animation: fadeIn 300ms;
+	-webkit-transition: height 300ms ease-in-out;
+	display: none;
+	overflow: hidden;
+	position: relative;
+
+	h1 {
+		font-size: 22px;
+		text-align: center;
+	}
+
+	#settings-form {
+		label {
+			display: block;
+			margin: 10px 0;
+			cursor: pointer;
+			font-size: 16px;
+			padding-left: 90px;
+
+			input {
+				padding-right: 10px;
+			}
+		}
+
+		button {
+			margin: 10px auto;
+			text-align: center;
+		}
+	}
+
+	.go-back {
+		text-align: center;
+		color: #333;
+		text-decoration: underline;
+		margin: 10px auto;
+		display: block;
+
+		&:hover {
+			color: #000;
+		}
+	}
+}
