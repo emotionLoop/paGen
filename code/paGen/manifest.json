@@ -1,6 +1,6 @@
 {
 	"name": "__MSG_name__",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"manifest_version": 2,
 	"description": "__MSG_description__",
 	"browser_action": {
@@ -14,5 +14,11 @@
 	"web_accessible_resources": [
 		"icon.png"
 	],
-	"default_locale": "en"
+	"icons": {
+		"16": "icon-16.png",
+		"48": "icon-48.png",
+		"128": "icon.png"
+	},
+	"default_locale": "en",
+	"incognito": "split"
 }
