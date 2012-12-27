@@ -175,7 +175,7 @@ saveSettings = (settings, notify) ->
 	if validateSettings settings, true
 		# Save settings using the Chrome extension storage API. Try sync, fallback to local
 		window.chrome.storage.sync.set { settings: settings }, () ->
-			if chrome.runtime.lastError && chrome.runtime.lastError.message && chrome.runtime.lastError.message.indexOf 'MAX_WRITE_OPERATIONS_PER_HOUR' != false
+			if chrome.runtime.lastError && chrome.runtime.lastError.message && chrome.runtime.lastError.message.indexOf( 'MAX_WRITE_OPERATIONS_PER_HOUR' ) != -1
 				window.chrome.storage.local.set { settings: settings }, () ->
 					paGenSettings = settings
 
