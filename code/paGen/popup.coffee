@@ -15,12 +15,6 @@ defaultSettings =
 # Object: Current settings
 paGenSettings = defaultSettings
 
-# Object: Window Heights
-windowHeights =
-	single: '190px'
-	multiple: '270px'
-	settings: '355px'
-
 ## HELPERS ##
 
 # Prototype extend: Shuffle a string
@@ -115,38 +109,42 @@ validateSettings = (settings, notify) ->
 	if !settings.type || ( settings.type != 'single' && settings.type != 'multiple' )
 		if notify
 			throwError window.chrome.i18n.getMessage( 'validateType' )
-		false
+		return false
 
 	if !settings.chars || isNaN settings.chars || settings.chars < 1 || settings.chars > 128
 		if notify
 			throwError window.chrome.i18n.getMessage( 'validateChars' )
-		false
+		return false
 
 	if !settings.howmany || isNaN settings.howmany || settings.howmany < 1 || settings.howmany > 20
 		if notify
 			throwError window.chrome.i18n.getMessage( 'validateHowMany' )
-		false
+		return false
 
 	if !settings.security.lowercase && !settings.security.uppercase && !settings.security.special && !settings.security.punctuation
 		if notify
 			throwError window.chrome.i18n.getMessage( 'validateComplexity' )
-		false
+		return false
 
 	true
 
 # Function: Apply Settings
-applySettings = () ->
+applySettings = (isItFirstLoad) ->
+	# Force Boolean
+	if !isItFirstLoad
+		isItFirstLoad = false
+	else
+		isItFirstLoad = true
+
 	# Enable single/multiple according to settings
 	if paGenSettings.type == 'single'
 		document.getElementById('generator-form').getElementsByClassName('single')[0].style.display = 'block'
 		document.getElementById('generator-form').getElementsByClassName('multiple')[0].style.display = 'none'
-		document.getElementById('main-screen').style.height = windowHeights.single
 		document.getElementById('settingsSingle').checked = true
 		document.getElementById('settingsMultiple').checked = false
 	else
 		document.getElementById('generator-form').getElementsByClassName('multiple')[0].style.display = 'block'
 		document.getElementById('generator-form').getElementsByClassName('single')[0].style.display = 'none'
-		document.getElementById('main-screen').style.height = windowHeights.multiple
 		document.getElementById('settingsMultiple').checked = true
 		document.getElementById('settingsSingle').checked = false
 
@@ -162,20 +160,27 @@ applySettings = () ->
 	document.getElementById('settingsPunctuation').checked = paGenSettings.security.punctuation
 	document.getElementById('settingsReadable').checked = paGenSettings.security.readable
 
-	# Focus correct element
-	if paGenSettings.type == 'single'
-		document.getElementById('single-passwords-length').focus()
-	else
-		document.getElementById('multiple-passwords-length').focus()
+	# Focus correct element on first load, this needs a timeout because of the DOM changes made by applyi18n()
+	if isItFirstLoad
+		if paGenSettings.type == 'single'
+			window.setTimeout () ->
+				document.getElementById('single-passwords-length').focus()
+				true
+			, 100
+		else
+			window.setTimeout () ->
+				document.getElementById('multiple-passwords-length').focus()
+				true
+			, 100
 
 	true
 
 # Function: Save Settings
 saveSettings = (settings, notify) ->
-	if validateSettings settings, true
+	if validateSettings( settings, true )
 		# Save settings using the Chrome extension storage API. Try sync, fallback to local
 		window.chrome.storage.sync.set { settings: settings }, () ->
-			if chrome.runtime.lastError && chrome.runtime.lastError.message && chrome.runtime.lastError.message.indexOf( 'MAX_WRITE_OPERATIONS_PER_HOUR' ) != -1
+			if window.chrome.runtime.lastError && window.chrome.runtime.lastError.message && window.chrome.runtime.lastError.message.indexOf( 'MAX_WRITE_OPERATIONS_PER_HOUR' ) != -1
 				window.chrome.storage.local.set { settings: settings }, () ->
 					paGenSettings = settings
 
@@ -199,7 +204,13 @@ saveSettings = (settings, notify) ->
 		false
 
 # Function: Get Settings
-getSettings = () ->
+getSettings = (isItFirstLoad) ->
+	# Force Boolean
+	if !isItFirstLoad
+		isItFirstLoad = false
+	else
+		isItFirstLoad = true
+
 	# Get settings using the Chrome extension storage API. Try sync, fallback to local
 	window.chrome.storage.sync.get 'settings', (items) ->
 		if items.settings
@@ -208,7 +219,7 @@ getSettings = () ->
 			if validateSettings settings, false
 				paGenSettings = settings
 
-				applySettings()
+				applySettings( isItFirstLoad )
 			true
 		else
 			window.chrome.storage.local.get 'settings', (items) ->
@@ -217,7 +228,7 @@ getSettings = () ->
 
 					if validateSettings settings, false
 						paGenSettings = settings
-				applySettings()
+				applySettings( isItFirstLoad )
 			true
 
 # Function: Get and return Settings from the Forms
@@ -269,13 +280,13 @@ generatePassword = (settings) ->
 	# Define character possibilities according to complexity
 	if settings.security.lowercase
 		if settings.security.readable
-			charPossibilities.push 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz'
+			charPossibilities.push 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz'
 		else
 			charPossibilities.push 'abcdefghijklmnopqrstuvwxyz'
 
 	if settings.security.uppercase
 		if settings.security.readable
-			charPossibilities.push 'ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ'
+			charPossibilities.push 'ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ'
 		else
 			charPossibilities.push 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
@@ -313,17 +324,6 @@ addEventListenerToList = (nodeList, event, fn) ->
 
 ## EVENT LISTENERS ##
 
-# Chrome Listener: Save & Apply Settings whenever a sync is made
-window.chrome.storage.onChanged.addListener (changes, namespace) ->
-	if namespace == 'sync'
-		for key of changes
-			if key == 'settings'
-				settings = extend( paGenSettings, changes[key] )
-
-		if settings
-			saveSettings settings, false
-	true
-
 # EventListener: Disable generator-form submit
 document.getElementById('generator-form').addEventListener 'submit', (event) ->
 	event.preventDefault()
@@ -337,36 +337,15 @@ document.getElementById('settings-form').addEventListener 'submit', (event) ->
 # EventListener: Settings cog button
 document.getElementById('settings-cog').addEventListener 'click', (event) ->
 	event.preventDefault()
-	document.getElementById('main-screen').style.height = '0px'
-	hideScreen = () ->
-		document.getElementById('main-screen').style.display = 'none'
-		true
-	window.setTimeout hideScreen, 300
+	document.getElementById('main-screen').style.display = 'none'
 	document.getElementById('settings-screen').style.display = 'block'
-	document.getElementById('settings-screen').style.height = '0px'
-	setScreenHeight = () ->
-		document.getElementById('settings-screen').style.height = windowHeights.settings
-		true
-	window.setTimeout setScreenHeight, 10
 	true
 
 # EventListener: Go Back button
 addEventListenerToList document.getElementById('settings-screen').getElementsByClassName('go-back'), 'click', (event) ->
 	event.preventDefault()
-	document.getElementById('settings-screen').style.height = '0px'
-	hideScreen = () ->
-		document.getElementById('settings-screen').style.display = 'none'
-		true
-	window.setTimeout hideScreen, 300
+	document.getElementById('settings-screen').style.display = 'none'
 	document.getElementById('main-screen').style.display = 'block'
-	document.getElementById('main-screen').style.height = '0px'
-	setScreenHeight = () ->
-		if paGenSettings.type == 'single'
-			document.getElementById('main-screen').style.height = windowHeights.single
-		else
-			document.getElementById('main-screen').style.height = windowHeights.multiple
-		true
-	window.setTimeout setScreenHeight, 10
 	true
 
 # EventListener: Save Settings button
@@ -392,7 +371,7 @@ addEventListenerToList document.getElementsByClassName('generate-password'), 'cl
 	true
 
 # Event: Get, Validate and Apply Settings
-getSettings()
+getSettings( true )
 
 # Event: Apply i18n
 applyi18n()
