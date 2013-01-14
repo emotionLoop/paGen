@@ -95,6 +95,14 @@
 		"message": "Uppercase",
 		"description": "Label."
 	},
+	"numbersDescription": {
+		"message": "Include Numbers: [0..9]",
+		"description": "Numbers option explanation."
+	},
+	"numbersOption": {
+		"message": "Numbers",
+		"description": "Label."
+	},
 	"specialDescription": {
 		"message": "Include Special characters: [áÁ..àÀ..äÄ..çÇ]",
 		"description": "Special option explanation."

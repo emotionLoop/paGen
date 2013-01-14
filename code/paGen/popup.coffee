@@ -8,6 +8,7 @@ defaultSettings =
 	security:
 		lowercase: true
 		uppercase: true
+		numbers: true
 		special: true
 		punctuation: true
 		readable: false
@@ -121,7 +122,7 @@ validateSettings = (settings, notify) ->
 			throwError window.chrome.i18n.getMessage( 'validateHowMany' )
 		return false
 
-	if !settings.security.lowercase && !settings.security.uppercase && !settings.security.special && !settings.security.punctuation
+	if !settings.security.lowercase && !settings.security.uppercase && !settings.security.numbers && !settings.security.special && !settings.security.punctuation
 		if notify
 			throwError window.chrome.i18n.getMessage( 'validateComplexity' )
 		return false
@@ -156,6 +157,7 @@ applySettings = (isItFirstLoad) ->
 	# Update settings
 	document.getElementById('settingsLowercase').checked = paGenSettings.security.lowercase
 	document.getElementById('settingsUppercase').checked = paGenSettings.security.uppercase
+	document.getElementById('settingsNumbers').checked = paGenSettings.security.numbers
 	document.getElementById('settingsSpecial').checked = paGenSettings.security.special
 	document.getElementById('settingsPunctuation').checked = paGenSettings.security.punctuation
 	document.getElementById('settingsReadable').checked = paGenSettings.security.readable
@@ -251,6 +253,7 @@ getSettingsFromHTML = () ->
 
 	parsedSettings.security.lowercase = document.getElementById('settingsLowercase').checked
 	parsedSettings.security.uppercase = document.getElementById('settingsUppercase').checked
+	parsedSettings.security.numbers = document.getElementById('settingsNumbers').checked
 	parsedSettings.security.special = document.getElementById('settingsSpecial').checked
 	parsedSettings.security.punctuation = document.getElementById('settingsPunctuation').checked
 	parsedSettings.security.readable = document.getElementById('settingsReadable').checked
@@ -289,6 +292,12 @@ generatePassword = (settings) ->
 			charPossibilities.push 'ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ'
 		else
 			charPossibilities.push 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+	if settings.security.numbers
+		if settings.security.readable
+			charPossibilities.push '0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789'
+		else
+			charPossibilities.push '012345678901234567890123456789'
 
 	if settings.security.special
 		if settings.security.readable
