@@ -1,6 +1,6 @@
 # paGen — Password Generator by emotionLoop
 
-Current version: 1.0.4
+Current version: 1.1.0
 
 Help & Support: http://emotionloop.com
 
